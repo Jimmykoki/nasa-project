@@ -9,10 +9,10 @@ const launchesRouter = require('./routes/launches/launches.router');
 const app = express();
 app.use(
   cors({
-    origin: 'http://localhost:3001',
+    origin: 'http://localhost:3000',
   })
 );
-app.use(morgan('tiny')); // combined
+app.use(morgan('combined')); // combined
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, '..', 'public')));

@@ -4,14 +4,16 @@ const { parse } = require('csv-parse');
 
 const planets = require('./planets.mongo');
 
-function isHabitablePlanet(planet) {
+// const habitablePlanets = [];
+
+const isHabitablePlanet = (planet) => {
   return (
     planet['koi_disposition'] === 'CONFIRMED' &&
     planet['koi_insol'] > 0.36 &&
     planet['koi_insol'] < 1.11 &&
     planet['koi_prad'] < 1.6
   );
-}
+};
 
 function loadPlanetsData() {
   return new Promise((resolve, reject) => {
@@ -26,7 +28,8 @@ function loadPlanetsData() {
       )
       .on('data', async (data) => {
         if (isHabitablePlanet(data)) {
-          savePlanet(data);
+          //habitablePlanets.push(data);
+          savePlanets(data);
         }
       })
       .on('error', (err) => {
@@ -34,8 +37,8 @@ function loadPlanetsData() {
         reject(err);
       })
       .on('end', async () => {
-        const countPlanetsFound = (await getAllPlanets()).length;
-        console.log(`${countPlanetsFound} habitable planets found!`);
+        const countPlanttsFound = (await getAllPlanets()).length;
+        console.log(`${countPlanttsFound} habitable planets found!`);
         resolve();
       });
   });
@@ -43,15 +46,13 @@ function loadPlanetsData() {
 
 async function getAllPlanets() {
   return await planets.find(
-    {},
-    {
-      _id: 0,
-      __v: 0,
+    {}, {
+      '_id': 0, '__v': 0,
     }
   );
 }
 
-async function savePlanet(planet) {
+async function savePlanets(planet) {
   try {
     await planets.updateOne(
       {
@@ -64,8 +65,8 @@ async function savePlanet(planet) {
         upsert: true,
       }
     );
-  } catch (err) {
-    console.error(`Could not save planet ${err}`);
+  } catch (error) {
+    console.log(`Could not save planet ${error}`);
   }
 }
 

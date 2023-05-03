@@ -15,6 +15,7 @@ function usePlanets() {
   }, [getPlanets]);
 
   return planets;
+
 }
 
 export default usePlanets;
