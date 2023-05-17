@@ -2,8 +2,8 @@
 
 ## Preview
 
-![launches history](client/public/img/launches history.png)
-![planet exploration](client/public/img/Planet exploration.png)
+![launches history](/client/public/img/launches%20history.png)
+![planet exploration](/client/public/img/Planet%20exploration.png)
 
 ## Getting Started
 
