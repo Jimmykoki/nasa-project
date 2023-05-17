@@ -1,21 +1,23 @@
 const mongoose = require('mongoose');
-const MONGO_URL = `mongodb+srv://nasa-api:gUIdAf9lQq9AR94O@nasacluster.le4jxec.mongodb.net/nasa2?retryWrites=true&w=majority`; 
+require('dotenv').config();
+
+const MONGO_URL = process.env.MONGO_URL;
 
 mongoose.connection.once('connected', () => {
-    console.log('MongoDB connection established successfully!');
-  });
-  
-  mongoose.connection.on('error', (err) => {
-    console.log(`MongoDB connection error: ${err}`);
-    process.exit(-1);
-  });
+  console.log('MongoDB connection established successfully!');
+});
 
-  async function mongoConnect() {
-    await mongoose.connect(MONGO_URL);
-  }
+mongoose.connection.on('error', (err) => {
+  console.log(`MongoDB connection error: ${err}`);
+  process.exit(-1);
+});
 
-  async function mongoDisconnect() {
-    await mongoose.disconnect();
-  }
+async function mongoConnect() {
+  await mongoose.connect(MONGO_URL);
+}
 
-  module.exports = { mongoConnect, mongoDisconnect };
+async function mongoDisconnect() {
+  await mongoose.disconnect();
+}
+
+module.exports = { mongoConnect, mongoDisconnect };
